@@ -35,7 +35,6 @@ jobs:
     uses: ./.github/workflows/tests-unit.yml
     with:
       BRANCH_REF: ${{ github.ref }}
-    secrets: inherit
 
   tests-acceptance:
     name: Acceptance Tests
@@ -43,4 +42,3 @@ jobs:
     with:
       BRANCH_REF: ${{ github.ref }}
       environment: Main Tests
-    secrets: inherit

@@ -13,6 +13,13 @@ on:
       BRANCH_REF:
         type: string
         required: true
+      FORK_PR:
+        type: boolean
+        required: false
+      ENVIRONMENT:
+        type: string
+        required: false
+        default: Integrate Pull Request
 
 jobs:
 
@@ -40,11 +47,11 @@ jobs:
     uses: ./.github/workflows/tests-acceptance.yml
     with:
       BRANCH_REF: ${{ inputs.BRANCH_REF }}
-      environment: Integrate Pull Request
-    secrets: inherit
+      environment: ${{ inputs.ENVIRONMENT }}
 
   analyze:
     name: Analyze (${{ matrix.language }})
+    if: ${{ inputs.FORK_PR != true }}
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
     #   - https://gh.io/supported-runners-and-hardware-resources

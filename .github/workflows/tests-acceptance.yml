@@ -7,7 +7,7 @@ on:
         type: string
         required: true
       environment:
-        description: "Environment to run licensed acceptance tests in: 'Integrate Pull Request' for PRs (requires approval) or 'Main Tests' for main/release runs."
+        description: "Environment to run licensed acceptance tests in: 'Fork PR' for fork PRs (requires approval) or 'Integrate Pull Request' for main/release runs."
         type: string
         required: true
     secrets:
@@ -16,7 +16,7 @@ on:
       GITLAB_EE_ULTIMATE_LICENSE:
         required: false
       CODECOV_TOKEN:
-        required: true
+        required: false
 
 permissions:
   contents: read
@@ -45,6 +45,7 @@ jobs:
       - name: Run Standard acceptance tests for ${{ matrix.flavor }} flavor
         run: uv run --no-sync qa test tests/acceptance/standard --cov=. --cov-report=xml --durations=0 --reruns 3 --reruns-delay 10 --log-cli-level=WARNING
       - name: Upload coverage
+        if: ${{ secrets.CODECOV_TOKEN != '' }}
         uses: Wandalen/wretry.action@v3
         with:
           action: codecov/codecov-action@v3
@@ -80,6 +81,7 @@ jobs:
       - name: Run acceptance Tests for ${{ matrix.tier }} features
         run: uv run --no-sync qa test tests/acceptance/${{ matrix.tier }} --cov=. --cov-report=xml --durations=0 --reruns 3 --reruns-delay 10 --log-cli-level=WARNING
       - name: Upload coverage
+        if: ${{ secrets.CODECOV_TOKEN != '' }}
         uses: Wandalen/wretry.action@v3
         with:
           action: codecov/codecov-action@v3
