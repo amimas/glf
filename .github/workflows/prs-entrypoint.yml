@@ -1,0 +1,37 @@
+name: "CI - PRs"
+
+# This workflow is the single entrypoint for pull requests.
+# It uses pull_request so source code from forks is checked out safely without
+# direct access to repository secrets. Sensitive values are supplied through the
+# Integrate Pull Request environment for the licensed acceptance tests.
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: write
+  security-events: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pr_jobs:
+    name: "Pipeline"
+    uses: ./.github/workflows/pr-ci-workflow.yml
+    with:
+      BRANCH_REF: ${{ github.event.pull_request.head.sha }}
+      FORK_PR: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+      ENVIRONMENT: Integrate Pull Request
+    secrets: inherit
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      pull-requests: write
+      security-events: write
