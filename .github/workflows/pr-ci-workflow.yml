@@ -21,6 +21,15 @@ on:
         required: false
         default: Integrate Pull Request
 
+permissions:
+  actions: read
+  contents: read
+  packages: read
+  pull-requests: write
+  security-events: write
+  id-token: write
+
+
 jobs:
 
   build:
