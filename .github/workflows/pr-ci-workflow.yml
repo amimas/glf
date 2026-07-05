@@ -40,7 +40,7 @@ jobs:
     uses: ./.github/workflows/tests-unit.yml
     with:
       BRANCH_REF: ${{ inputs.BRANCH_REF }}
-    secrets: inherit
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   tests-acceptance:
     name: Acceptance Tests
@@ -48,7 +48,7 @@ jobs:
     with:
       BRANCH_REF: ${{ inputs.BRANCH_REF }}
       environment: ${{ inputs.ENVIRONMENT }}
-    secrets: inherit
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   analyze:
     name: Analyze (${{ matrix.language }})
