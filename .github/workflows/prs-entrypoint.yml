@@ -30,9 +30,3 @@ jobs:
       FORK_PR: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
       ENVIRONMENT: Integrate Pull Request
     secrets: inherit
-    permissions:
-      actions: read
-      contents: read
-      packages: read
-      pull-requests: write
-      security-events: write
