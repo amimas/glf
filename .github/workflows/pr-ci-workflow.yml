@@ -47,6 +47,9 @@ jobs:
     with:
       BRANCH_REF: ${{ inputs.BRANCH_REF }}
       environment: ${{ inputs.ENVIRONMENT }}
+    secrets:
+      GITLAB_EE_LICENSE: ${{ secrets.GITLAB_EE_LICENSE }}
+      GITLAB_EE_ULTIMATE_LICENSE: ${{ secrets.GITLAB_EE_ULTIMATE_LICENSE }}
 
   analyze:
     name: Analyze (${{ matrix.language }})
