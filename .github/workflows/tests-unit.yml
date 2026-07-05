@@ -7,10 +7,11 @@ on:
       BRANCH_REF:
         type: string
         required: true
-    secrets:
       CODECOV_TOKEN:
+        description: "Optional Codecov token for coverage upload"
+        type: string
         required: false
-
+        default: ""
 permissions:
   contents: read
 
@@ -37,7 +38,7 @@ jobs:
       - name: Run unit tests
         run: uv run --no-sync qa test tests/unit --cov=. --cov-report=xml --log-cli-level=WARNING
       - name: Upload coverage to Codecov
-        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        if: ${{ inputs.CODECOV_TOKEN != '' }}
         uses: Wandalen/wretry.action@v3
         with:
           action: codecov/codecov-action@v3
@@ -45,6 +46,6 @@ jobs:
             name: unit-tests-${{ matrix.python-version }}
             flags: unittests
             fail_ci_if_error: true
-            token: ${{ secrets.CODECOV_TOKEN }}
+            token: ${{ inputs.CODECOV_TOKEN }}
           attempt_limit: 5
           attempt_delay: 10000
