@@ -42,3 +42,4 @@ jobs:
     with:
       BRANCH_REF: ${{ github.ref }}
       environment: Main Tests
+    secrets: inherit
