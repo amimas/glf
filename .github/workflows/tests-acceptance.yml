@@ -7,7 +7,7 @@ on:
         type: string
         required: true
       environment:
-        description: "Environment to run licensed acceptance tests in: 'Fork PR' for fork PRs (requires approval) or 'Integrate Pull Request' for main/release runs."
+        description: "Environment to run licensed acceptance tests in: 'Integrate Pull Request' for PRs (requires approval) or 'Main Tests' for main runs."
         type: string
         required: true
     secrets:
